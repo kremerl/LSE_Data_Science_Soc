@@ -1,4 +1,4 @@
-# in this file, json is transformed to csv 
+# in this file, json is transformed to csv
 
 # extract business_id and stars variable from reviews file
 data = {'business_id': [], 'stars': [], 'review_date': [], 'text': []}
