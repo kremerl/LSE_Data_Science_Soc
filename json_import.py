@@ -37,7 +37,6 @@ city_df.head()
 lv_df = city_df[city_df['city'].str.contains('Las Vegas')]
 lv_df.count()
 
-
 del data2
 del business
 del business_file
@@ -52,38 +51,8 @@ lv_reviews_df.head()
 lv_reviews_df.to_csv('lv_nlp.csv', sep=',', index=False)
 
 
-# now load the business info json
-data2 = {'business_id': [], 'city': [], 'state': [], 'latitude': [], 'longitude': [], 'stars': [],
-         'review_count': [], 'is_open': [], 'categories': []
-         }
 
-with open('/Users/louiskremer/Desktop/GitHub_Projects/Yelp Data local/json_data/yelp_business_info.json') as business_file:
-    for line in tqdm.tqdm(business_file):
-        business = json.loads(line)
-        data2['business_id'].append(business['business_id'])
-        data2['city'].append(business['city'])
-        data2['state'].append(business['state'])
-        data2['latitude'].append(business['latitude'])
-        data2['longitude'].append(business['longitude'])
-        data2['stars'].append(business['stars'])
-        data2['review_count'].append(business['review_count'])
-        data2['is_open'].append(business['is_open'])
-        data2['categories'].append(business['categories'])
-
-business_df = pd.DataFrame(data2)
-business_df.head()
-
-del data2
-del line
-
-business_df.to_csv('business_info.csv', sep=',', index=False)
-
-# Try and package logic inside functions for reusability
-# and to catch cases, e.g. everyone else might have different folder names
-import pandas as pd
-import json
-import tqdm
-
+# fn provided by Chris Chia, pres of DS soc, thanks Chris!
 def df_from_json(filepath: str) -> pd.DataFrame:
     """
     Inputs: takes in the path to the .json file as str
@@ -111,7 +80,6 @@ def df_from_json(filepath: str) -> pd.DataFrame:
     # convert from array of jsons to DataFrame
     return pd.json_normalize(temp)
 
-#with open('/Users/louiskremer/Desktop/GitHub_Projects/Yelp Data local/json_data/yelp_business_info.json') as business_file:
-#    data3 = json.load(business_file)
-#    df =pd.json_normalize(data3, 'attributes', {'BusinessAcceptsCreditCards','BikeParking','GoodForKids'
-#        ,'BusinessParking','ByAppointmentOnly','RestaurantsPriceRange2'})
+
+business_df = df_from_json("/Users/louiskremer/Desktop/GitHub_Projects/Yelp Data local/json_data/yelp_business_info.json")
+business_df.to_csv("business_info.csv", index=False)
