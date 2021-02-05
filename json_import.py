@@ -78,7 +78,38 @@ del line
 
 business_df.to_csv('business_info.csv', sep=',', index=False)
 
+# Try and package logic inside functions for reusability
+# and to catch cases, e.g. everyone else might have different folder names
+import pandas as pd
+import json
+import tqdm
 
+def df_from_json(filepath: str) -> pd.DataFrame:
+    """
+    Inputs: takes in the path to the .json file as str
+    Returns: returns .json, normalised as dataframe
+    Example usage: 
+    business_df = df_from_json("yelp_academic_dataset_business.json")
+    business_df.to_csv("business_df", index=False)
+    Notes:
+    this is small enough to fit into memory, 
+    at least for the business json at ~ 100 MB
+    The data may not be fully normalised, so a closer inspection
+    at the .json file is required
+    """
+    temp = []
+    with open(filepath) as f:
+        for i, line in tqdm.tqdm(enumerate(f)):
+            # try and parse the line as a JSON / dict
+            try:
+                temp += [json.loads(line)]
+            # an error might occur, if so do nothing
+            except:
+                pass
+    # close the file buffer
+    f.close()
+    # convert from array of jsons to DataFrame
+    return pd.json_normalize(temp)
 
 #with open('/Users/louiskremer/Desktop/GitHub_Projects/Yelp Data local/json_data/yelp_business_info.json') as business_file:
 #    data3 = json.load(business_file)
