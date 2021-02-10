@@ -1,0 +1,44 @@
+Last login: Wed Feb 10 13:55:43 on ttys000
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+Louiss-MacBook-Pro:~ louiskremer$ git config --global core.excludesfile ~/.gitignore_global
+Louiss-MacBook-Pro:~ louiskremer$ vi ~/.gitignore_global
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.DS_Store
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+~                                                                         
+
