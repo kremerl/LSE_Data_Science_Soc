@@ -61,8 +61,9 @@ def is_poisoned(a, b):
     poisoned_binary = []
     for row in a:
         if row in b:
-            count = lv_poisoned_counter[row]
-            poisoned_binary.append(count)
+            poisoned_count = lv_poisoned_counter[row]
+            total_count = lv_nlp[row]
+            poisoned_binary.append(poisoned_count / total_count)
         else:
             poisoned_binary.append(0)
     return poisoned_binary
