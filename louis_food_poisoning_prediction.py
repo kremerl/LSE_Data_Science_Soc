@@ -35,9 +35,10 @@ is_poisoned(one,two)
 
 # convert data to list (fn does not accept pandas data types)
 business_id = business_info["business_id"].values.tolist()
+nlp_id = lv_nlp["business_id"].values.tolist()
 
 # get unique values from poisoned_id, makes it substantially faster to compute
-poisoned_id = lv_nlp2["business_id"].values.tolist()
+poisoned_id = lv_poisoned["business_id"].values.tolist()
 poisoned_id = set(poisoned_id.copy())
 poisoned_id = list(poisoned_id.copy())
 
@@ -45,13 +46,14 @@ poisoned_id = list(poisoned_id.copy())
 # apply fn to full datasets to create a variable that classifies restaurants depending on whether or not they have already caused food poisoning
 # business_info["poisoned"] = is_poisoned(business_info["business_id"], lv_poisoned2["business_id"]) # DOES NOT WORK WITH PANDAS for some reason I don't understand :(
 business_info["poisoned"] = is_poisoned(business_id, poisoned_id)
-
 business_info.groupby("poisoned").size()
 
+#PROBLEMARIC OUTPUT (more 1s than 0s...)
+lv_nlp["poisoned"] = is_poisoned(nlp_id, poisoned_id)
+lv_nlp.groupby("poisoned").size()
 
 
-
-
+# debugging leftovers (keep for now)
 poisoned_id[0:3]
 full_id[0:3]
 full_id
