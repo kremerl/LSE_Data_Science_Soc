@@ -1,5 +1,7 @@
 #Louis' Food Poisoning Prediction
 
+from collections import Counter
+
 # subset reviews that experienced food poisoning, by matching words to their reviews
 words = ["poison", "diarrhea", "diarrhoea", "vomit", "puking", "puked", "threw up", "throw up", "salmonella"] # don't use "sick", as only 1/2 correlated with negative review
 lv_poisoned = lv_nlp[lv_nlp["text"].str.contains(("|".join(words)), case = False, na = False)]
@@ -52,6 +54,29 @@ business_info_lv
 
 business_info_lv.groupby("poisoned").size()
 
+# now count of poisoned reviews per restaurant
+lv_poisoned_counter = Counter(lv_poisoned["business_id"])
+
+def is_poisoned(a, b):
+    poisoned_binary = []
+    for row in a:
+        if row in b:
+            count = lv_poisoned_counter[row]
+            poisoned_binary.append(count)
+        else:
+            poisoned_binary.append(0)
+    return poisoned_binary
+
+business_info["poisoned"] = is_poisoned(business_id, poisoned_id)
+
+
+
+
+
+
+
+
+
 
 
 
@@ -61,15 +86,9 @@ poisoned_id[0:3]
 full_id[0:3]
 full_id
 
-z = ["sfu68", "sdfz98"]
-for i in enumerate(z):
-    print(z)
+z = ["oranges", "apples", "pears", "peaches"]
+for x in z:
+    print(x)
 
-type(z[1])
+pd.Series(z)
 
-type(business_info)
-type(lv_nlp["business_id"])
-type(full_id)
-type(one)
-type(poisoned_id)
-type(full_id[1:100])
