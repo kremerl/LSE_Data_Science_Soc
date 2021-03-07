@@ -27,18 +27,24 @@ def is_poisoned(a, b):
             new_variable.append(0)
     return new_variable
 
-# works on prototype
+# prototype of fn
 one = ["abc123", "bcd234", "cde345"]
-two = ["abc123", "xyz"]
-
+two = ["xyz", "xyz2", "abc123", "abc123"]
 is_poisoned(one,two)
 
 
-#DOES NOT WORK, ONLY 0s in output :(((
-# apply fn to full datasets to create a variable that classifies restaurants depending on whether or not they have already caused food poisoning
-lv_nlp2["poisoned"] = lv_nlp2.apply
+# convert data to list (fn does not accept pandas data types)
+business_id = business_info["business_id"].values.tolist()
 
-business_info["poisoned"] = is_poisoned(business_info["business_id"], lv_nlp2["business_id"])
+# get unique values from poisoned_id, makes it substantially faster to compute
+poisoned_id = lv_nlp2["business_id"].values.tolist()
+poisoned_id = set(poisoned_id.copy())
+poisoned_id = list(poisoned_id.copy())
+
+# WORKS, BUT ONLY FOR BUSINESS_INFO
+# apply fn to full datasets to create a variable that classifies restaurants depending on whether or not they have already caused food poisoning
+# business_info["poisoned"] = is_poisoned(business_info["business_id"], lv_poisoned2["business_id"]) # DOES NOT WORK WITH PANDAS for some reason I don't understand :(
+business_info["poisoned"] = is_poisoned(business_id, poisoned_id)
 
 business_info.groupby("poisoned").size()
 
@@ -46,7 +52,9 @@ business_info.groupby("poisoned").size()
 
 
 
-
+poisoned_id[0:3]
+full_id[0:3]
+full_id
 
 z = ["sfu68", "sdfz98"]
 for i in enumerate(z):
@@ -54,5 +62,9 @@ for i in enumerate(z):
 
 type(z[1])
 
-type(business_info["business_id"])
+type(business_info)
 type(lv_nlp["business_id"])
+type(full_id)
+type(one)
+type(poisoned_id)
+type(full_id[1:100])
