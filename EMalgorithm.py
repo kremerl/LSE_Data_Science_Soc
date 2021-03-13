@@ -1,6 +1,12 @@
 import pandas as pd
 import numpy as np
 import math
+import matplotlib.pyplot as plt
+import statistics as st
+from scipy.special import logsumexp
+from scipy.stats import multivariate_normal as mvn
+
+
 daf=pd.read_csv("D:/LSE/revision 2021/DS project/uttn/business_info.csv",low_memory=False)
 
 daf1=daf[["business_id","city","latitude","longitude"]]
@@ -13,10 +19,8 @@ dafp=dafp[["business_id","latitude","longitude"]]
 def rong(city):
     return([[max(city['latitude']),min(city['latitude'])],[max(city['longitude']),min(city['longitude'])]])
 l=rong(dafp)
-import matplotlib.pyplot as plt
 # dafp.plot.scatter(y="latitude", x="longitude")
 
-import statistics as st
 def mv(city):
     return([[st.mean(city['longitude']),st.variance(city['longitude'])],[st.mean(city['latitude']),st.variance(city['latitude'])]])
 s=mv(dafp)
@@ -54,12 +58,10 @@ def initialize_random_params(df,n):
 
 params=initialize_random_params(dafp,2)
 print(params)
-from scipy import stats
-from scipy.special import logsumexp
-from sklearn.mixture import GaussianMixture
+
 def e_step(x, params):
     n=len(params['phi'])    
-    dist=[stats.multivariate_normal(params["mu"][i], params["sigma"][i]).pdf(x) for i in range(n)]       
+    dist=[mvn(params["mu"][i], params["sigma"][i]).pdf(x) for i in range(n)]       
     log_p_y_x = np.log(params['phi'])[np.newaxis, ...] + \
                 np.log(dist).T
     log_p_y_x_norm = logsumexp(log_p_y_x, axis=1)
@@ -120,7 +122,6 @@ print("total steps: ", len(unsupervised_loglikelihoods))
 # plt.savefig("unsupervised.png")
 # plt.close()
 
-from scipy.stats import multivariate_normal as mvn
 params,unsupervised_forecasts, unsupervised_posterior, unsupervised_loglikelihoods = run_em(d,3)
 
 # Generate grid points
