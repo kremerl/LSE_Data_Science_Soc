@@ -14,7 +14,7 @@ def rong(city):
     return([[max(city['latitude']),min(city['latitude'])],[max(city['longitude']),min(city['longitude'])]])
 l=rong(dafp)
 import matplotlib.pyplot as plt
-dafp.plot.scatter(y="latitude", x="longitude")
+# dafp.plot.scatter(y="latitude", x="longitude")
 
 import statistics as st
 def mv(city):
@@ -115,10 +115,10 @@ print("unsupervised: ")
 random_params = initialize_random_params(dafp,n)
 params,unsupervised_forecastsforecasts, unsupervised_posterior, unsupervised_loglikelihoods = run_em(d,3)
 print("total steps: ", len(unsupervised_loglikelihoods))
-plt.plot(unsupervised_loglikelihoods)
-plt.title("unsupervised log likelihoods")
-plt.savefig("unsupervised.png")
-plt.close()
+# plt.plot(unsupervised_loglikelihoods)
+# plt.title("unsupervised log likelihoods")
+# plt.savefig("unsupervised.png")
+# plt.close()
 
 from scipy.stats import multivariate_normal as mvn
 params,unsupervised_forecasts, unsupervised_posterior, unsupervised_loglikelihoods = run_em(d,3)
@@ -138,10 +138,10 @@ r,X,Y=gen_grid(dafp,1.3)
 Z = mvn.pdf(r, params['mu'][0], params['sigma'][0]).reshape(X.shape)
 
 # arbitrary contour levels
-contour_level = [0.1, 0.2, 0.3]
+contour_level = [0.1,0.2,0.3]
 
 
-params,unsupervised_forecastsforecasts,unsupervised_posterior,unsupervised_loglikelihoods = REM(daft,['longitude','latitude'],3)
+params,unsupervised_forecastsforecasts,unsupervised_posterior,unsupervised_loglikelihoods = REM(dafp,['longitude','latitude'],3)
 for i in range(3):
     Z = mvn.pdf(r, params['mu'][i], params['sigma'][i]).reshape(X.shape)
     plt.contour(X, Y, Z, levels = contour_level)
