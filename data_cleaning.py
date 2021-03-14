@@ -2,7 +2,7 @@
 
 # make dataframe easily viewable
 pd.set_option('display.max_rows', 500)
-pd.set_option('display.max_columns', 500)
+pd.set_option('display.max_columns', 1000)
 pd.set_option('display.width', 1000)
 pd.set_option('display.max_colwidth', 300)
 
@@ -70,7 +70,11 @@ for x in new2:
             break
     else:
         Cuisine.append('Others')
+
+
 #attach cuisine to the df
-business_info['Cuisine'] = np.array(Cuisine)
+business_info = business_info.copy() #to avoid SettingWithCopyWarning
+business_info['Cuisine'] = Cuisine
+
 with open('data_pickled.pkl', 'wb') as f:
     pickle.dump(business_info, f)
