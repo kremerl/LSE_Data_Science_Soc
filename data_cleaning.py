@@ -53,9 +53,6 @@ for x in new2:
         elif i=='Seafood':
             Cuisine.append('Seafood')
             break
-        elif i=='Asian Fusion':
-            Cuisine.append('Asian Fusion')
-            break
         elif i=='Indian':
             Cuisine.append('Indian')
             break
@@ -71,6 +68,26 @@ for x in new2:
     else:
         Cuisine.append('Others')
 
+#louis alternative
+Cuisine = []
+interm = []
+for count, row in enumerate(new2):
+    interm = []
+    for i in row:
+        if i== 'Fast Food' or i=='Pizza' or i=="Chicken Wings":
+            interm.append('Fast Food')
+        if i=="Burgers":
+            interm.append("Burgers")
+        if i=='Mexican':
+            interm.append('Mexican')
+        if i=='American (Traditional)' or i=='American (New)':
+            interm.append('American')
+        if not interm:
+            interm.append("Other")
+    Cuisine.append(interm)
+    del(interm)
+
+Cuisine
 
 #attach cuisine to the df
 business_info = business_info.copy() #to avoid SettingWithCopyWarning
@@ -78,3 +95,25 @@ business_info['Cuisine'] = Cuisine
 
 with open('data_pickled.pkl', 'wb') as f:
     pickle.dump(business_info, f)
+
+
+
+#trying to understand stuff
+list = []
+list = [1,2,3]
+list2 = [4,5,6]
+merde = 1
+list.append(1)
+
+list
+
+cars = ["a", "b", "c"]
+list = []
+bist = []
+for count, value in enumerate(cars):
+    list.append(count)
+
+list = []
+
+if not list:
+    print("empty")
