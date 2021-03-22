@@ -17,7 +17,7 @@ words = ["poison", "diarrhea", "diarrhoea", "vomit", "puking", "puked", "threw u
 lv_poisoned = lv_nlp[lv_nlp["text"].str.contains(("|".join(words)), case = False, na = False)]
 
 # subset only bad reviews (nobody would give a good review to a restaurant in which they were poisoned)
-lv_poisoned["stars"] = pd.to_numeric(lv_poisoned["stars"].copy())
+lv_poisoned["stars"] = pd.to_numeric(lv_poisoned["stars"])
 lv_poisoned = lv_poisoned.loc[lv_poisoned["stars"] < 2.0]
 
 lv_poisoned.count()

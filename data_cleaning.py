@@ -68,20 +68,40 @@ for x in new2:
     else:
         Cuisine.append('Others')
 
+with open('data_pickled.pkl', 'wb') as f:
+    pickle.dump(business_info, f)
+
+
 #louis alternative
 Cuisine = []
 interm = []
-for count, row in enumerate(new2):
+for row in new2:
     interm = []
     for i in row:
-        if i== 'Fast Food' or i=='Pizza' or i=="Chicken Wings":
+        if  i=='American (Traditional)' or i=='American (New)' or i=="Chicken Wings" or i=="Burgers":
+            interm.append("American")
+        if i== 'Fast Food':
             interm.append('Fast Food')
-        if i=="Burgers":
-            interm.append("Burgers")
+        if i == 'Seafood':
+            interm.append('Seafood')
+        if i=='Pizza' or i=='Italian':
+            interm.append("Italian")
+        if i == 'Japanese' or i == 'Sushi Bars':
+            interm.append('Japanese')
         if i=='Mexican':
             interm.append('Mexican')
-        if i=='American (Traditional)' or i=='American (New)':
-            interm.append('American')
+        if i == 'Mediterranean':
+            interm.append('Mediterranean')
+        if i == 'Indian':
+            interm.append('Indian')
+        if i == 'Chinese':
+            interm.append('Chinese')
+        if i == 'Thai':
+            interm.append('Thai')
+        if i == 'Vietnamese':
+            interm.append('Vietnamese')
+        if i == 'Coffee & Tea':
+            interm.append('Coffee & Tea')
         if not interm:
             interm.append("Other")
     Cuisine.append(interm)
@@ -93,27 +113,6 @@ Cuisine
 business_info = business_info.copy() #to avoid SettingWithCopyWarning
 business_info['Cuisine'] = Cuisine
 
-with open('data_pickled.pkl', 'wb') as f:
-    pickle.dump(business_info, f)
 
 
 
-#trying to understand stuff
-list = []
-list = [1,2,3]
-list2 = [4,5,6]
-merde = 1
-list.append(1)
-
-list
-
-cars = ["a", "b", "c"]
-list = []
-bist = []
-for count, value in enumerate(cars):
-    list.append(count)
-
-list = []
-
-if not list:
-    print("empty")
