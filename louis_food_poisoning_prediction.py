@@ -57,19 +57,19 @@ print(business_info["%_poisoned"])
 # create dummies for different cuisines
 df = pd.get_dummies(business_info["Cuisine"].apply(pd.Series).stack()).sum(level=0) # https://stackoverflow.com/questions/29034928/pandas-convert-a-column-of-list-to-dummies?noredirect=1&lq=1
 df.head()
-business_info2 = business_info.copy()
-business_info2 = pd.concat([business_info, df], axis = 1)
+business_info = business_info.copy()
+business_info = pd.concat([business_info, df], axis = 1)
 
-business_info2.iloc[:,63:74]
-business_info_names = business_
-print(business_info2.columns.to_list())
+business_info2 = business_info.copy()
+
+
 
 # build logistic regression
 train = business_info2.sample(100)
 
 y_train = train[["%_poisoned"]].astype(float)
-x_train = train[['American', 'Asian Fusion', 'Chinese', 'Coffee & Tea', 'Fast Food', 'Indian', 'Italian', 'Japanese', 'Mediterranean', 'Mexican',
-                 'Others', 'Seafood', 'Thai', 'Vietnamese']].astype(float)
+x_train = train[['American', 'Chinese', 'Coffee & Tea', 'Fast Food', 'Indian', 'Italian', 'Japanese', 'Mediterranean', 'Mexican',
+                 'Other', 'Seafood', 'Thai', 'Vietnamese']].astype(float)
 
 smlogreg = sm.Logit(y_train, x_train).fit()
 smlogreg.summary()
