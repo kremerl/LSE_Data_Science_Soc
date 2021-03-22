@@ -17,6 +17,7 @@ words = ["poison", "diarrhea", "diarrhoea", "vomit", "puking", "puked", "threw u
 lv_poisoned = lv_nlp[lv_nlp["text"].str.contains(("|".join(words)), case = False, na = False)]
 
 # subset only bad reviews (nobody would give a good review to a restaurant in which they were poisoned)
+lv_poisoned = lv_poisoned.copy()
 lv_poisoned["stars"] = pd.to_numeric(lv_poisoned["stars"])
 lv_poisoned = lv_poisoned.loc[lv_poisoned["stars"] < 2.0]
 
@@ -47,14 +48,14 @@ def is_poisoned(a, b):
             poisoned_binary.append(0)
     return poisoned_binary
 
-# business_info["poisoned"] = is_poisoned(business_info["business_id"], lv_poisoned2["business_id"]) # DOES NOT WORK WITH PANDAS data input
+# business_info["poisoned"] = is_poisoned(business_info["business_id"], lv_poisoned2["business_id"]) # DOES NOT WORK, needs list input...
 business_info["%_poisoned"] = is_poisoned(business_id, poisoned_id)
 
 print(business_info["%_poisoned"])
 
 
 # create dummies for different cuisines
-df = pd.get_dummies(business_info["Cuisine"], columns = ["Cuisine"])
+df = pd.get_dummies(business_info["Cuisine"].apply(pd.Series).stack()).sum(level=0) # https://stackoverflow.com/questions/29034928/pandas-convert-a-column-of-list-to-dummies?noredirect=1&lq=1
 df.head()
 business_info2 = business_info.copy()
 business_info2 = pd.concat([business_info, df], axis = 1)

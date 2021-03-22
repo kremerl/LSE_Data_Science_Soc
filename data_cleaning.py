@@ -73,12 +73,20 @@ with open('data_pickled.pkl', 'wb') as f:
 
 
 #louis alternative
+
+#subset to Las Vegas only
+business_info = business_info[business_info["city"] == "Las Vegas"] #for integration with louis part
+
+#categories into cuisines
+new2 = business_info['categories'].str.split(', ')
+
+
 Cuisine = []
 interm = []
 for row in new2:
     interm = []
     for i in row:
-        if  i=='American (Traditional)' or i=='American (New)' or i=="Chicken Wings" or i=="Burgers":
+        if i=='American (Traditional)' or i=='American (New)' or i=="Chicken Wings" or i=="Burgers":
             interm.append("American")
         if i== 'Fast Food':
             interm.append('Fast Food')
@@ -104,6 +112,7 @@ for row in new2:
             interm.append('Coffee & Tea')
         if not interm:
             interm.append("Other")
+    interm = list(set(interm.copy())) # to eliminate duplicates coming from or condition
     Cuisine.append(interm)
     del(interm)
 
